@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --color-primary: #1a2744;
+  --color-primary-dark: #0f172a;
+  --color-accent: #E8782A;
+  --color-grey-bg: #F8F9FA;
+  --color-text-dark: #212529;
+  --color-success: #28a745;
+  --color-border-subtle: #e5e7eb;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background-color: var(--color-grey-bg);
+    color: var(--color-text-dark);
+  }
+}
