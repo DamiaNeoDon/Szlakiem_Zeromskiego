@@ -1,211 +1,1783 @@
-You are an expert full-stack web developer. Build a complete, production-ready, high-converting single-page website for a room rental business in Łódź, Poland.
+<!--
+=============================================================
+  SZLAKIEM ŻEROMSKIEGO — INSTRUKCJA WDROŻENIA NA GITHUB PAGES
+=============================================================
+KROK 1: Wejdź na github.com i zaloguj się (lub załóż konto)
+KROK 2: Kliknij "New repository" → nazwa np. "szlakiemzeromskiego" → Public → Create
+KROK 3: Na stronie repozytorium kliknij "uploading an existing file"
+KROK 4: Przeciągnij ten plik index.html → kliknij "Commit changes"
+KROK 5: Wejdź w Settings → Pages → Source: "Deploy from branch" → Branch: main → / (root) → Save
+KROK 6: Po ~60 sekundach strona jest dostępna pod adresem:
+         https://[twoja-nazwa-uzytkownika].github.io/[nazwa-repozytorium]/
+=============================================================
+-->
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Szlakiem Żeromskiego – Nowoczesne Pokoje do Wynajęcia w Centrum Łodzi</title>
+  <meta name="description" content="Wynajmij nowoczesny pokój lub mikro-apartament w centrum Łodzi. Oferta dla studentów i młodych pracujących. Pełne wyposażenie, własny klucz, cisza. Zadzwoń: 600-259-675">
+  <meta name="keywords" content="pokoje do wynajęcia Łódź, wynajmij pokój Łódź centrum, stancja Łódź student, mieszkanie Łódź Żeromskiego, pokój dla studenta Łódź">
+  <meta property="og:title" content="Szlakiem Żeromskiego – Pokoje w Centrum Łodzi">
+  <meta property="og:description" content="Nowoczesne, w pełni wyposażone pokoje dla studentów i pracujących. Centrum Łodzi. Tel: 600-259-675">
+  <meta property="og:type" content="website">
 
-OUTPUT: One single self-contained `index.html` file with ALL CSS inside a `<style>` tag in `<head>` and ALL JavaScript inside a `<script>` tag before `</body>`. Zero external dependencies. Zero CDN links. Zero npm. Must work by simply opening the file in a browser or uploading to GitHub Pages.
+  <style>
+    /* ============================================================
+       CSS VARIABLES & RESET
+    ============================================================ */
+    :root {
+      --navy: #1a2744;
+      --navy-dark: #111b33;
+      --navy-mid: #2d3a5e;
+      --orange: #E8782A;
+      --orange-dark: #c9641e;
+      --orange-light: #f5924a;
+      --grey-bg: #F8F9FA;
+      --white: #FFFFFF;
+      --text: #212529;
+      --text-muted: #6c757d;
+      --green: #28a745;
+      --blue: #007bff;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+      --shadow-md: 0 4px 20px rgba(0,0,0,0.12);
+      --shadow-lg: 0 8px 40px rgba(0,0,0,0.18);
+      --radius: 12px;
+      --radius-sm: 8px;
+      --transition: all 0.3s ease;
+      --font: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', sans-serif;
+    }
 
----
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-## BUSINESS CONTENT
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
 
-Brand: "Szlakiem Żeromskiego"
-Tagline: NOWOCZESNE POKOJE DLA STUDENTÓW I MŁODYCH PRACUJĄCYCH W CENTRUM ŁODZI
-Company: Frada Enterprises
-Address: ul. Żeromskiego 29, 90-737 Łódź
-Phone: 600-259-675
-Email: Frada.Enterprises@gmail.com
+    body {
+      font-family: var(--font);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+      background: var(--white);
+    }
 
----
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    img { max-width: 100%; }
 
-## DESIGN DIRECTION
+    /* ============================================================
+       TYPOGRAPHY
+    ============================================================ */
+    h1, h2, h3, h4 { line-height: 1.2; font-weight: 700; }
+    h1 { font-size: clamp(2rem, 5vw, 3.5rem); }
+    h2 { font-size: clamp(1.6rem, 3vw, 2.4rem); }
+    h3 { font-size: clamp(1.1rem, 2vw, 1.4rem); }
 
-Mirror the layout and UX feel of wolnepokojelodz.pl:
-- Clean, modern Polish real-estate rental aesthetic
-- Sticky top navbar: brand name left, anchor links right, phone number visible, CTA button
-- Full-width hero with dark overlay gradient and strong headline + two CTA buttons
-- Alternating white and light grey (#F8F9FA) sections
-- Card grid for room listings
-- Icon + text benefit blocks
-- Floating phone button fixed bottom-right corner
-- Smooth scroll, fade-in-on-scroll animations via Intersection Observer
-- Navbar background changes on scroll (transparent → white with shadow after 50px)
+    .section-headline {
+      text-align: center;
+      margin-bottom: 0.5rem;
+      color: var(--navy);
+    }
+    .section-sub {
+      text-align: center;
+      color: var(--text-muted);
+      margin-bottom: 3rem;
+      font-size: 1.05rem;
+    }
 
-Color palette:
-- Primary navy: #1a2744
-- Accent orange: #E8782A
-- Light background: #F8F9FA
-- White: #FFFFFF
-- Body text: #212529
+    /* ============================================================
+       UTILITIES
+    ============================================================ */
+    .container {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
 
-Font: system font stack only: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif
+    .section-pad { padding: 80px 0; }
 
----
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: var(--transition);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .btn-primary {
+      background: var(--orange);
+      color: var(--white);
+    }
+    .btn-primary:hover {
+      background: var(--orange-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(232,120,42,0.4);
+    }
+    .btn-outline {
+      background: transparent;
+      color: var(--white);
+      border: 2px solid rgba(255,255,255,0.7);
+    }
+    .btn-outline:hover {
+      background: rgba(255,255,255,0.15);
+      border-color: var(--white);
+      transform: translateY(-2px);
+    }
+    .btn-lg { padding: 18px 36px; font-size: 1.1rem; }
 
-## FULL PAGE STRUCTURE
+    /* ============================================================
+       SCROLL ANIMATIONS
+    ============================================================ */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .fade-up.delay-1 { transition-delay: 0.1s; }
+    .fade-up.delay-2 { transition-delay: 0.2s; }
+    .fade-up.delay-3 { transition-delay: 0.3s; }
+    .fade-up.delay-4 { transition-delay: 0.4s; }
 
-### SECTION 1 — STICKY NAVIGATION
-- Left: brand name "Szlakiem Żeromskiego" in bold navy
-- Right: anchor links → Oferta | Pokoje | O Nas | Kontakt
-- Far right: phone "📞 600-259-675" + orange CTA button "Zadzwoń teraz" (tel: link)
-- Mobile: hamburger menu toggle (JS-powered, no libraries)
-- Becomes white with box-shadow after scrolling 50px
+    /* ============================================================
+       NAVBAR
+    ============================================================ */
+    #navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      padding: 16px 0;
+      transition: background 0.3s ease, box-shadow 0.3s ease, padding 0.3s ease;
+      background: transparent;
+    }
 
-### SECTION 2 — HERO
-- Full viewport height
-- Background: CSS gradient from #1a2744 to #2d3a5e, plus a subtle repeating geometric CSS pattern overlay (use background-image with CSS to create a city-grid texture — no external images)
-- H1: "Nowoczesne Pokoje w Sercu Łodzi"
-- H2 subheadline: "Dla studentów i młodych pracujących — w pełni wyposażone, bez zbędnych formalności"
-- Two buttons: "Zobacz Ofertę" (scrolls to #pokoje) + "Zadzwoń: 600-259-675" (tel: link, outlined style)
-- Trust row below buttons (small text with checkmarks): ✓ Umowa na piśmie  ✓ Własny klucz  ✓ Cisza i komfort  ✓ Centrum Łodzi
+    #navbar.scrolled {
+      background: var(--white);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.10);
+      padding: 10px 0;
+    }
 
-### SECTION 3 — DLACZEGO MY (id="oferta", white background)
-Headline: "Dlaczego warto wybrać właśnie nas?"
-Three large feature cards in a row (stack on mobile):
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
 
-Card 1:
-Icon: large 🔐 emoji in a circle
-Title: BEZPIECZEŃSTWO
-Text: Jesteśmy profesjonalną firmą. Zawsze masz swój własny, jedyny klucz do pokoju. Właściciel nie mieszka w lokalu — masz pełną prywatność i swobodę.
+    .nav-brand {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: -0.3px;
+      transition: color 0.3s;
+      flex-shrink: 0;
+    }
+    #navbar.scrolled .nav-brand { color: var(--navy); }
 
-Card 2:
-Icon: 📍
-Title: DOSKONAŁE LOKALIZACJE
-Text: Wszystkie nasze nieruchomości leżą w centrum Łodzi — tuż przy uczelniach wyższych lub w odległości maksymalnie 3 minut spacerem od przystanku tramwajowego lub autobusowego.
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
 
-Card 3:
-Icon: 💰
-Title: OKAZYJNA CENA
-Text: Nowoczesny, w pełni wyposażony pokój za cenę zwykłej stancji? Sprawdź nas — naprawdę jesteśmy tańsi niż porównywalne oferty na rynku łódzkim.
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
 
-### SECTION 4 — CO WCHODZI W CENĘ (light grey background)
-Headline: "Co otrzymujesz w cenie najmu?"
-2-column icon grid (4 columns on desktop):
-📶 Darmowe Wi-Fi
-🛋️ Nowoczesne meble
-🧺 Pralka
-❄️ Lodówka
-📦 Kuchenka mikrofalowa
-🍳 W pełni wyposażona kuchnia
-🔑 Własny klucz do pokoju
-🤫 Regulamin gwarantujący ciszę
-🧹 Zadbane przestrzenie wspólne
-🏙️ Lokalizacja w centrum Łodzi
-🧲 Żelazko
-📋 Umowa najmu na piśmie
+    .nav-links a {
+      color: rgba(255,255,255,0.85);
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--orange);
+      transition: width 0.3s;
+    }
+    .nav-links a:hover::after { width: 100%; }
+    #navbar.scrolled .nav-links a { color: var(--text); }
+    .nav-links a:hover { color: var(--orange); }
+    #navbar.scrolled .nav-links a:hover { color: var(--orange); }
 
-Centered tagline below the grid: "Potrzebujesz tylko szczoteczki do zębów i ręcznika 😊"
+    .nav-phone {
+      color: rgba(255,255,255,0.85);
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: color 0.3s;
+    }
+    #navbar.scrolled .nav-phone { color: var(--navy); }
 
-### SECTION 5 — NASZE POKOJE I MIESZKANIA (id="pokoje", white background)
-Headline: "Nasze Pokoje i Mieszkania"
-Subheadline: "Przykładowe realizacje — ulica Żeromskiego i okolice, centrum Łodzi"
+    .nav-cta {
+      background: var(--orange);
+      color: var(--white) !important;
+      padding: 10px 20px;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: var(--transition);
+    }
+    .nav-cta:hover {
+      background: var(--orange-dark);
+      transform: translateY(-1px);
+    }
+    .nav-cta::after { display: none !important; }
 
-Responsive card grid — 3 columns desktop, 2 tablet, 1 mobile.
-Each card structure:
-- Header block with CSS gradient background (vary the gradient per card using shades of navy/teal/slate), centered large room emoji (🛏️ or 🏠), and a status badge top-right corner
-- Card body: room name, short description, location
-- Footer: orange "Zadzwoń" button (tel:600-259-675)
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+      background: none;
+      border: none;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+      transition: var(--transition);
+    }
+    #navbar.scrolled .hamburger span { background: var(--navy); }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-Status badge styles:
-- DOSTĘPNE → green (#28a745)
-- ZAREZERWOWANE → orange (#E8782A)
-- WYNAJĘTE → grey (#6c757d)
-- W REALIZACJI → blue (#007bff)
+    /* Mobile menu */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--navy);
+      z-index: 999;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .mobile-menu.open {
+      display: flex;
+      opacity: 1;
+      pointer-events: all;
+    }
+    .mobile-menu a {
+      color: var(--white);
+      font-size: 1.5rem;
+      font-weight: 700;
+      transition: color 0.2s;
+    }
+    .mobile-menu a:hover { color: var(--orange); }
+    .mobile-close {
+      position: absolute;
+      top: 20px;
+      right: 24px;
+      background: none;
+      border: none;
+      color: var(--white);
+      font-size: 2rem;
+      cursor: pointer;
+    }
 
-Cards to generate:
-1. Mikro-apartament #1 | ul. Żeromskiego 18 | DOSTĘPNE | Nowoczesne studio w pełni wyposażone. Idealne dla jednej osoby. Centrum Łodzi.
-2. Mikro-apartament #2 | ul. Żeromskiego 18 | DOSTĘPNE | Funkcjonalne studio z własną przestrzenią do pracy i wypoczynku.
-3. Mikro-apartament #3 | ul. Żeromskiego 18 | DOSTĘPNE | Przytulny apartament z nowoczesnym wykończeniem i pełnym wyposażeniem.
-4. Mikro-apartament #4 | ul. Żeromskiego 18 | ZAREZERWOWANE | Zarezerwowane. Zapytaj o kolejny wolny termin.
-5. Mikro-apartament #5 | ul. Żeromskiego 18 | WYNAJĘTE | Aktualnie zajęte. Dołącz do listy oczekujących.
-6. Apartament 1-pokojowy | ul. Żeromskiego 27 | DOSTĘPNE | Kameralny apartament blisko uczelni. Idealne dla studenta lub pracującego.
-7. Mieszkanie 5-pokojowe | ul. Żeromskiego 27 | DOSTĘPNE | Przestronne mieszkanie dla grupy. 5 osobnych pokojów, wspólna kuchnia i łazienka.
-8. Mieszkanie 5-pokojowe | ul. Żeromskiego 29 | DOSTĘPNE | Duże mieszkanie z pokojami do wynajęcia osobno. Blisko centrum.
-9. Mieszkanie 3-pokojowe | ul. Gdańska 98 | W REALIZACJI | Nowy projekt w trakcie realizacji. Zapytaj o dostępność wkrótce.
-10. Mieszkanie 3-pokojowe | ul. Gdańska 98 | W REALIZACJI | Kolejny lokal już wkrótce gotowy. Zapisz się na listę oczekujących.
+    /* ============================================================
+       HERO
+    ============================================================ */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 50%, var(--navy-mid) 100%);
+    }
 
-Below the grid, centered: large orange button "Zadzwoń i zapytaj o dostępność: 600-259-675"
+    /* City-grid CSS texture */
+    #hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
 
-### SECTION 6 — O NAS (id="o-nas", light grey background)
-Two-column layout (text left, decorative CSS art right — draw a simple abstract building/city shape using pure CSS divs and borders, no images):
+    /* Decorative glow blobs */
+    #hero::after {
+      content: '';
+      position: absolute;
+      top: -200px;
+      right: -200px;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(232,120,42,0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
 
-Headline: "Kim jesteśmy?"
-Body text:
-"Frada Enterprises to profesjonalna firma zajmująca się wynajmem pokojów i mieszkań w centrum Łodzi. Specjalizujemy się w ofercie dla studentów i młodych pracujących, którzy szukają nowoczesnego, spokojnego i przystępnego cenowo miejsca do życia.
+    .hero-blob {
+      position: absolute;
+      bottom: -150px;
+      left: -150px;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(45,58,94,0.6) 0%, transparent 70%);
+      pointer-events: none;
+    }
 
-Wszystkie nasze nieruchomości są starannie wyremontowane, w pełni wyposażone i regularnie serwisowane. Wybieramy tylko dobre, bezpieczne i atrakcyjne lokalizacje — zawsze blisko uczelni lub komunikacji miejskiej.
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 780px;
+    }
 
-Zależy nam na Twoim komforcie: u nas masz pełną prywatność, własny klucz i spokój. Regulamin mieszkania nie pozwala na imprezy — dzięki temu panuje atmosfera sprzyjająca nauce i wypoczynkowi.
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(232,120,42,0.15);
+      border: 1px solid rgba(232,120,42,0.4);
+      color: var(--orange-light);
+      padding: 8px 16px;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 24px;
+      letter-spacing: 0.5px;
+    }
 
-Zapraszamy serdecznie!"
+    .hero-content h1 {
+      color: var(--white);
+      margin-bottom: 20px;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+    }
 
-Below text: two smaller stat blocks in a row:
-- 🏠 10+ lokali w portfolio
-- 📍 Centrum Łodzi — ul. Żeromskiego i okolice
-- ⭐ Zaufanie studentów od lat
-- 🤝 Umowa i pełne bezpieczeństwo
+    .hero-content h1 span { color: var(--orange); }
 
-### SECTION 7 — KONTAKT (id="kontakt", dark navy background #1a2744, white text)
-Two-column layout:
+    .hero-sub {
+      color: rgba(255,255,255,0.75);
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      margin-bottom: 36px;
+      max-width: 600px;
+    }
 
-Left column — contact details:
-Large headline: "Skontaktuj się z nami"
-Subtext: "Chcesz zamieszkać? Masz pytania? Zadzwoń lub napisz — odpowiadamy szybko."
+    .hero-buttons {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
 
-📍 ul. Żeromskiego 29, 90-737 Łódź
-📞 600-259-675 — large, clickable, styled as a big orange button
-✉️ Frada.Enterprises@gmail.com — clickable mailto link
-⏰ Dostępni 7 dni w tygodniu
+    .hero-trust {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
 
-Right column — contact form (white card on dark background):
-Fields:
-- Imię i nazwisko (required, text input)
-- Numer telefonu (required, tel input)
-- Adres e-mail (email input)
-- Który pokój Cię interesuje? (select dropdown with all 10 listing names)
-- Wiadomość (textarea, 4 rows)
-- Submit button: "Wyślij wiadomość" (full-width orange)
-On submit: preventDefault, validate required fields, show a success message div: "✅ Dziękujemy! Skontaktujemy się z Tobą wkrótce." — no page reload, no backend needed.
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: rgba(255,255,255,0.75);
+      font-size: 0.88rem;
+    }
 
-### SECTION 8 — FOOTER (dark #212529 background, white text)
-Three columns:
-Col 1: Brand name + tagline + copyright © 2025 Frada Enterprises
-Col 2: Quick links (same nav anchors)
-Col 3: Contact summary (address, phone, email)
-Bottom bar: "Wszelkie prawa zastrzeżone. | ul. Żeromskiego 29, 90-737 Łódź"
+    .trust-item .check {
+      color: var(--orange);
+      font-weight: 700;
+      font-size: 1rem;
+    }
 
-### FLOATING ELEMENT — PHONE BUTTON
-Fixed bottom-right, always visible:
-Orange circle button with 📞 icon
-On hover: expands to show "600-259-675" text
-Links to tel:600-259-675
-Add a subtle pulse animation (CSS keyframes) to draw attention
+    /* ============================================================
+       WHY US — SECTION 3
+    ============================================================ */
+    #oferta { background: var(--white); }
 
----
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
 
-## JAVASCRIPT REQUIREMENTS (all vanilla, no libraries)
+    .feature-card {
+      background: var(--white);
+      border: 1px solid #e9ecef;
+      border-radius: var(--radius);
+      padding: 40px 32px;
+      text-align: center;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--orange);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+    .feature-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+    }
+    .feature-card:hover::before { transform: scaleX(1); }
 
-1. Sticky navbar: add class `.scrolled` when window.scrollY > 50 → changes background to white + adds box-shadow
-2. Mobile hamburger menu: toggle nav links visibility on click, close on link click
-3. Smooth scroll: all anchor `<a href="#...">` links scroll smoothly (also set CSS scroll-behavior: smooth on html)
-4. Intersection Observer: all sections and cards fade-in + slide-up when entering viewport (add `.visible` class, CSS handles the transition)
-5. Contact form: validation + success message (no page reload)
-6. Floating button hover expand: CSS transition, optionally JS for touch devices
+    .feature-icon {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #fff3eb, #ffe0c9);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      margin: 0 auto 24px;
+      border: 2px solid rgba(232,120,42,0.2);
+    }
 
----
+    .feature-card h3 {
+      color: var(--navy);
+      margin-bottom: 14px;
+      font-size: 1.1rem;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
 
-## SEO META TAGS (in `<head>`)
+    .feature-card p {
+      color: var(--text-muted);
+      line-height: 1.7;
+      font-size: 0.95rem;
+    }
 
-```html
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Szlakiem Żeromskiego – Nowoczesne Pokoje do Wynajęcia w Centrum Łodzi</title>
-<meta name="description" content="Wynajmij nowoczesny pokój lub mikro-apartament w centrum Łodzi. Oferta dla studentów i młodych pracujących. Pełne wyposażenie, własny klucz, cisza. Zadzwoń: 600-259-675">
-<meta name="keywords" content="pokoje do wynajęcia Łódź, wynajmij pokój Łódź centrum, stancja Łódź student, mieszkanie Łódź Żeromskiego, pokój dla studenta Łódź">
-<meta property="og:title" content="Szlakiem Żeromskiego – Pokoje w Centrum Łodzi">
-<meta property="og:description" content="Nowoczesne, w pełni wyposażone pokoje dla studentów i pracujących. Centrum Łodzi. Tel: 600-259-675">
-<meta property="og:type" content="website">
-```
+    /* ============================================================
+       WHAT'S INCLUDED — SECTION 4
+    ============================================================ */
+    #included { background: var(--grey-bg); }
 
----
+    .amenities-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 32px;
+    }
 
-## GITHUB PAGES DEPLOYMENT INSTRUCTIONS
+    .amenity-item {
+      background: var(--white);
+      border-radius: var(--radius-sm);
+      padding: 20px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border: 1px solid #e9ecef;
+      transition: var(--transition);
+    }
+    .amenity-item:hover {
+      border-color: var(--orange);
+      box-shadow: var(--shadow-sm);
+      transform: translateY(-2px);
+    }
 
-Place this comment block at the very top of index.html (line 1):
+    .amenity-icon { font-size: 1.4rem; flex-shrink: 0; }
+
+    .amenity-text {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .amenity-tagline {
+      text-align: center;
+      font-size: 1.1rem;
+      color: var(--navy);
+      font-weight: 600;
+      margin-top: 8px;
+    }
+
+    /* ============================================================
+       LISTINGS — SECTION 5
+    ============================================================ */
+    #pokoje { background: var(--white); }
+
+    .listings-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+
+    .listing-card {
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid #e9ecef;
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+    }
+    .listing-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .listing-header {
+      height: 140px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      font-size: 3rem;
+    }
+
+    /* Varied gradients per card */
+    .grad-1 { background: linear-gradient(135deg, #1a2744, #2d4a8a); }
+    .grad-2 { background: linear-gradient(135deg, #1a3a4a, #2d6a8a); }
+    .grad-3 { background: linear-gradient(135deg, #1a3344, #1a5a6a); }
+    .grad-4 { background: linear-gradient(135deg, #2d3a1a, #4a5a2a); }
+    .grad-5 { background: linear-gradient(135deg, #3a2a1a, #5a3a2a); }
+    .grad-6 { background: linear-gradient(135deg, #2a1a44, #4a2a7a); }
+    .grad-7 { background: linear-gradient(135deg, #1a2a3a, #2a4a6a); }
+    .grad-8 { background: linear-gradient(135deg, #2a1a3a, #4a2a5a); }
+    .grad-9 { background: linear-gradient(135deg, #1a3a2a, #2a5a4a); }
+    .grad-10 { background: linear-gradient(135deg, #3a1a2a, #5a2a4a); }
+
+    .status-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      padding: 4px 12px;
+      border-radius: 50px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: var(--white);
+    }
+    .badge-green { background: var(--green); }
+    .badge-orange { background: var(--orange); }
+    .badge-grey { background: var(--text-muted); }
+    .badge-blue { background: var(--blue); }
+
+    .listing-body {
+      padding: 20px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .listing-name {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 4px;
+    }
+
+    .listing-location {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .listing-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      flex: 1;
+      margin-bottom: 16px;
+    }
+
+    .listing-cta {
+      display: block;
+      width: 100%;
+      text-align: center;
+      background: var(--orange);
+      color: var(--white);
+      padding: 10px;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: var(--transition);
+    }
+    .listing-cta:hover {
+      background: var(--orange-dark);
+    }
+
+    .listings-cta-wrap {
+      text-align: center;
+    }
+
+    /* ============================================================
+       ABOUT — SECTION 6
+    ============================================================ */
+    #o-nas { background: var(--grey-bg); }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .about-text h2 { color: var(--navy); margin-bottom: 20px; text-align: left; }
+
+    .about-text p {
+      color: var(--text-muted);
+      line-height: 1.8;
+      margin-bottom: 16px;
+      font-size: 0.97rem;
+    }
+
+    .about-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 32px;
+    }
+
+    .stat-item {
+      background: var(--white);
+      padding: 16px;
+      border-radius: var(--radius-sm);
+      border-left: 4px solid var(--orange);
+      font-size: 0.88rem;
+      color: var(--text);
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
+    /* CSS City Art */
+    .city-art {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      height: 320px;
+      position: relative;
+    }
+
+    .city-skyline {
+      display: flex;
+      align-items: flex-end;
+      gap: 6px;
+      position: absolute;
+      bottom: 40px;
+    }
+
+    .building {
+      background: var(--navy);
+      border-radius: 3px 3px 0 0;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .building::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 100%;
+      background: repeating-linear-gradient(
+        transparent,
+        transparent 10px,
+        rgba(255,255,255,0.06) 10px,
+        rgba(255,255,255,0.06) 11px
+      );
+      border-radius: 3px 3px 0 0;
+    }
+
+    /* Building window dots */
+    .building-windows {
+      position: absolute;
+      top: 12px;
+      left: 0;
+      right: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .window-row {
+      display: flex;
+      gap: 4px;
+    }
+
+    .w {
+      width: 5px;
+      height: 5px;
+      background: var(--orange);
+      opacity: 0.7;
+      border-radius: 1px;
+    }
+
+    .w.dark { background: rgba(255,255,255,0.15); opacity: 1; }
+
+    .city-road {
+      position: absolute;
+      bottom: 0;
+      left: -40px;
+      right: -40px;
+      height: 40px;
+      background: #c8d0da;
+      border-top: 3px solid #a0abb8;
+    }
+
+    .city-road::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: repeating-linear-gradient(90deg, var(--white) 0, var(--white) 20px, transparent 20px, transparent 40px);
+      transform: translateY(-50%);
+    }
+
+    .city-wrapper {
+      background: linear-gradient(180deg, #e8eef6 0%, #c8d8e8 100%);
+      border-radius: var(--radius);
+      padding: 20px;
+      width: 100%;
+      height: 320px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Sun */
+    .city-sun {
+      position: absolute;
+      top: 30px;
+      right: 40px;
+      width: 50px;
+      height: 50px;
+      background: #f5c842;
+      border-radius: 50%;
+      box-shadow: 0 0 0 8px rgba(245,200,66,0.2), 0 0 0 16px rgba(245,200,66,0.1);
+    }
+
+    /* Cloud */
+    .city-cloud {
+      position: absolute;
+      top: 40px;
+      left: 30px;
+    }
+    .cloud-body {
+      width: 70px;
+      height: 25px;
+      background: rgba(255,255,255,0.7);
+      border-radius: 50px;
+      position: relative;
+    }
+    .cloud-body::before {
+      content: '';
+      position: absolute;
+      top: -15px;
+      left: 15px;
+      width: 30px;
+      height: 30px;
+      background: rgba(255,255,255,0.7);
+      border-radius: 50%;
+    }
+    .cloud-body::after {
+      content: '';
+      position: absolute;
+      top: -10px;
+      left: 35px;
+      width: 22px;
+      height: 22px;
+      background: rgba(255,255,255,0.7);
+      border-radius: 50%;
+    }
+
+    /* ============================================================
+       CONTACT — SECTION 7
+    ============================================================ */
+    #kontakt { background: var(--navy); }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+
+    .contact-info h2 {
+      color: var(--white);
+      margin-bottom: 12px;
+      text-align: left;
+    }
+
+    .contact-sub {
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 36px;
+      line-height: 1.7;
+    }
+
+    .contact-items {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+
+    .contact-item-icon {
+      font-size: 1.2rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .contact-item-text {
+      color: rgba(255,255,255,0.75);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .contact-item-text a {
+      color: rgba(255,255,255,0.75);
+      transition: color 0.2s;
+    }
+    .contact-item-text a:hover { color: var(--orange); }
+
+    .contact-call-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--orange);
+      color: var(--white);
+      padding: 16px 28px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      transition: var(--transition);
+      width: fit-content;
+      margin-top: 28px;
+    }
+    .contact-call-btn:hover {
+      background: var(--orange-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(232,120,42,0.4);
+    }
+
+    /* Contact Form */
+    .contact-form-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 40px;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .contact-form-card h3 {
+      color: var(--navy);
+      margin-bottom: 24px;
+      font-size: 1.3rem;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1.5px solid #dee2e6;
+      border-radius: var(--radius-sm);
+      font-size: 0.95rem;
+      font-family: var(--font);
+      color: var(--text);
+      transition: border-color 0.2s, box-shadow 0.2s;
+      background: var(--white);
+      outline: none;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--orange);
+      box-shadow: 0 0 0 3px rgba(232,120,42,0.12);
+    }
+
+    .form-group textarea { resize: vertical; min-height: 100px; }
+
+    .form-submit {
+      width: 100%;
+      padding: 16px;
+      background: var(--orange);
+      color: var(--white);
+      border: none;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition);
+      font-family: var(--font);
+    }
+    .form-submit:hover {
+      background: var(--orange-dark);
+      box-shadow: 0 6px 20px rgba(232,120,42,0.35);
+    }
+
+    .form-success {
+      display: none;
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      margin-top: 16px;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    #footer { background: #111827; color: rgba(255,255,255,0.7); }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 40px;
+      padding: 60px 0 40px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .footer-brand-name {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+
+    .footer-tagline {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.5;
+      margin-bottom: 16px;
+      max-width: 260px;
+    }
+
+    .footer-copy {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.35);
+    }
+
+    .footer-col h4 {
+      color: var(--white);
+      font-size: 0.95rem;
+      margin-bottom: 16px;
+      font-weight: 700;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .footer-links a {
+      color: rgba(255,255,255,0.6);
+      font-size: 0.88rem;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--orange); }
+
+    .footer-contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+
+    .footer-contact-item a {
+      color: rgba(255,255,255,0.6);
+      transition: color 0.2s;
+    }
+    .footer-contact-item a:hover { color: var(--orange); }
+
+    .footer-bottom {
+      padding: 20px 0;
+      text-align: center;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.3);
+    }
+
+    /* ============================================================
+       FLOATING PHONE BUTTON
+    ============================================================ */
+    .float-phone {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      gap: 0;
+      background: var(--orange);
+      border-radius: 50px;
+      box-shadow: 0 4px 20px rgba(232,120,42,0.5);
+      cursor: pointer;
+      overflow: hidden;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      text-decoration: none;
+      color: var(--white);
+    }
+
+    .float-phone:hover {
+      box-shadow: 0 6px 30px rgba(232,120,42,0.6);
+    }
+
+    .float-icon {
+      width: 56px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+
+    .float-text {
+      max-width: 0;
+      overflow: hidden;
+      font-weight: 700;
+      font-size: 0.95rem;
+      white-space: nowrap;
+      transition: max-width 0.3s ease, padding 0.3s ease;
+      padding-right: 0;
+    }
+
+    .float-phone:hover .float-text {
+      max-width: 160px;
+      padding-right: 18px;
+    }
+
+    /* Pulse animation */
+    @keyframes pulse-ring {
+      0% { box-shadow: 0 0 0 0 rgba(232,120,42,0.5); }
+      70% { box-shadow: 0 0 0 14px rgba(232,120,42,0); }
+      100% { box-shadow: 0 0 0 0 rgba(232,120,42,0); }
+    }
+
+    .float-phone { animation: pulse-ring 2.5s ease-out infinite; }
+    .float-phone:hover { animation: none; }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 1024px) {
+      .amenities-grid { grid-template-columns: repeat(3, 1fr); }
+      .listings-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+      .footer-top > :first-child { grid-column: 1 / -1; }
+    }
+
+    @media (max-width: 768px) {
+      .section-pad { padding: 56px 0; }
+      .features-grid { grid-template-columns: 1fr; gap: 20px; }
+      .amenities-grid { grid-template-columns: repeat(2, 1fr); }
+      .listings-grid { grid-template-columns: 1fr; }
+      .about-grid { grid-template-columns: 1fr; gap: 32px; }
+      .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+      .footer-top { grid-template-columns: 1fr; gap: 32px; }
+      .footer-top > :first-child { grid-column: auto; }
+      .nav-links, .nav-phone, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      .hero-buttons { flex-direction: column; align-items: flex-start; }
+      .city-art { display: none; }
+      .about-stats { grid-template-columns: 1fr; }
+      .contact-form-card { padding: 24px; }
+    }
+
+    @media (max-width: 480px) {
+      .amenities-grid { grid-template-columns: 1fr; }
+      .hero-trust { flex-direction: column; gap: 10px; }
+      .float-phone:hover .float-text { max-width: 0; padding-right: 0; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ========================================================
+       MOBILE MENU
+  ======================================================== -->
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-close" id="mobileClose" aria-label="Zamknij menu">✕</button>
+    <a href="#oferta" class="mobile-link">Oferta</a>
+    <a href="#pokoje" class="mobile-link">Pokoje</a>
+    <a href="#o-nas" class="mobile-link">O Nas</a>
+    <a href="#kontakt" class="mobile-link">Kontakt</a>
+    <a href="tel:600259675" class="btn btn-primary">📞 Zadzwoń teraz</a>
+  </div>
+
+  <!-- ========================================================
+       NAVBAR
+  ======================================================== -->
+  <header id="navbar">
+    <div class="container nav-inner">
+      <a href="#" class="nav-brand">Szlakiem Żeromskiego</a>
+      <nav class="nav-right">
+        <ul class="nav-links">
+          <li><a href="#oferta">Oferta</a></li>
+          <li><a href="#pokoje">Pokoje</a></li>
+          <li><a href="#o-nas">O Nas</a></li>
+          <li><a href="#kontakt">Kontakt</a></li>
+        </ul>
+        <span class="nav-phone">📞 600-259-675</span>
+        <a href="tel:600259675" class="nav-links a nav-cta">Zadzwoń teraz</a>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ========================================================
+       HERO
+  ======================================================== -->
+  <section id="hero">
+    <div class="hero-blob"></div>
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">🏙️ Centrum Łodzi &nbsp;·&nbsp; Dla Studentów i Pracujących</div>
+        <h1>Nowoczesne Pokoje<br>w <span>Sercu Łodzi</span></h1>
+        <p class="hero-sub">Dla studentów i młodych pracujących — w pełni wyposażone, bez zbędnych formalności</p>
+        <div class="hero-buttons">
+          <a href="#pokoje" class="btn btn-primary btn-lg">Zobacz Ofertę</a>
+          <a href="tel:600259675" class="btn btn-outline btn-lg">📞 Zadzwoń: 600-259-675</a>
+        </div>
+        <div class="hero-trust">
+          <div class="trust-item"><span class="check">✓</span> Umowa na piśmie</div>
+          <div class="trust-item"><span class="check">✓</span> Własny klucz</div>
+          <div class="trust-item"><span class="check">✓</span> Cisza i komfort</div>
+          <div class="trust-item"><span class="check">✓</span> Centrum Łodzi</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================
+       DLACZEGO MY
+  ======================================================== -->
+  <section id="oferta" class="section-pad">
+    <div class="container">
+      <h2 class="section-headline fade-up">Dlaczego warto wybrać właśnie nas?</h2>
+      <p class="section-sub fade-up delay-1">Sprawdź, co wyróżnia nasze mieszkania na tle konkurencji</p>
+
+      <div class="features-grid">
+        <div class="feature-card fade-up delay-1">
+          <div class="feature-icon">🔐</div>
+          <h3>Bezpieczeństwo</h3>
+          <p>Jesteśmy profesjonalną firmą. Zawsze masz swój własny, jedyny klucz do pokoju. Właściciel nie mieszka w lokalu — masz pełną prywatność i swobodę.</p>
+        </div>
+        <div class="feature-card fade-up delay-2">
+          <div class="feature-icon">📍</div>
+          <h3>Doskonałe Lokalizacje</h3>
+          <p>Wszystkie nasze nieruchomości leżą w centrum Łodzi — tuż przy uczelniach wyższych lub w odległości maksymalnie 3 minut spacerem od przystanku tramwajowego lub autobusowego.</p>
+        </div>
+        <div class="feature-card fade-up delay-3">
+          <div class="feature-icon">💰</div>
+          <h3>Okazyjna Cena</h3>
+          <p>Nowoczesny, w pełni wyposażony pokój za cenę zwykłej stancji? Sprawdź nas — naprawdę jesteśmy tańsi niż porównywalne oferty na rynku łódzkim.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================
+       CO WCHODZI W CENĘ
+  ======================================================== -->
+  <section id="included" class="section-pad">
+    <div class="container">
+      <h2 class="section-headline fade-up">Co otrzymujesz w cenie najmu?</h2>
+      <p class="section-sub fade-up delay-1">Wszystko czego potrzebujesz — już na miejscu</p>
+
+      <div class="amenities-grid">
+        <div class="amenity-item fade-up delay-1"><span class="amenity-icon">📶</span><span class="amenity-text">Darmowe Wi-Fi</span></div>
+        <div class="amenity-item fade-up delay-1"><span class="amenity-icon">🛋️</span><span class="amenity-text">Nowoczesne meble</span></div>
+        <div class="amenity-item fade-up delay-2"><span class="amenity-icon">🧺</span><span class="amenity-text">Pralka</span></div>
+        <div class="amenity-item fade-up delay-2"><span class="amenity-icon">❄️</span><span class="amenity-text">Lodówka</span></div>
+        <div class="amenity-item fade-up delay-1"><span class="amenity-icon">📦</span><span class="amenity-text">Kuchenka mikrofalowa</span></div>
+        <div class="amenity-item fade-up delay-1"><span class="amenity-icon">🍳</span><span class="amenity-text">W pełni wyposażona kuchnia</span></div>
+        <div class="amenity-item fade-up delay-2"><span class="amenity-icon">🔑</span><span class="amenity-text">Własny klucz do pokoju</span></div>
+        <div class="amenity-item fade-up delay-2"><span class="amenity-icon">🤫</span><span class="amenity-text">Regulamin gwarantujący ciszę</span></div>
+        <div class="amenity-item fade-up delay-1"><span class="amenity-icon">🧹</span><span class="amenity-text">Zadbane przestrzenie wspólne</span></div>
+        <div class="amenity-item fade-up delay-1"><span class="amenity-icon">🏙️</span><span class="amenity-text">Lokalizacja w centrum Łodzi</span></div>
+        <div class="amenity-item fade-up delay-2"><span class="amenity-icon">🧲</span><span class="amenity-text">Żelazko</span></div>
+        <div class="amenity-item fade-up delay-2"><span class="amenity-icon">📋</span><span class="amenity-text">Umowa najmu na piśmie</span></div>
+      </div>
+
+      <p class="amenity-tagline fade-up">Potrzebujesz tylko szczoteczki do zębów i ręcznika 😊</p>
+    </div>
+  </section>
+
+  <!-- ========================================================
+       POKOJE
+  ======================================================== -->
+  <section id="pokoje" class="section-pad">
+    <div class="container">
+      <h2 class="section-headline fade-up">Nasze Pokoje i Mieszkania</h2>
+      <p class="section-sub fade-up delay-1">Przykładowe realizacje — ulica Żeromskiego i okolice, centrum Łodzi</p>
+
+      <div class="listings-grid">
+
+        <!-- Card 1 -->
+        <article class="listing-card fade-up delay-1">
+          <div class="listing-header grad-1">
+            🛏️
+            <span class="status-badge badge-green">Dostępne</span>
+          </div>
+          <div class="listing-body">
+            <div class="listing-name">Mieszkanie #1</div>
+            <div class="listing-location">📍 ul. Żeromskiego 18</div>
+            <p class="listing-desc">Nowoczesne studio w pełni wyposażone. Idealne dla jednej osoby. Centrum Łodzi.</p>
+            <a href="tel:600259675" class="listing-cta">📞 Zadzwoń</a>
+          </div>
+        </article>
+
+        <!-- Card 2 -->
+        <article class="listing-card fade-up delay-2">
+          <div class="listing-header grad-2">
+            🛏️
+            <span class="status-badge badge-green">Dostępne</span>
+          </div>
+          <div class="listing-body">
+            <div class="listing-name">Mieszkanie #2</div>
+            <div class="listing-location">📍 ul. Żeromskiego 18</div>
+            <p class="listing-desc">Funkcjonalne studio z własną przestrzenią do pracy i wypoczynku.</p>
+            <a href="tel:600259675" class="listing-cta">📞 Zadzwoń</a>
+          </div>
+        </article>
+
+        <!-- Card 3 -->
+        <article class="listing-card fade-up delay-3">
+          <div class="listing-header grad-3">
+            🛏️
+            <span class="status-badge badge-green">Dostępne</span>
+          </div>
+          <div class="listing-body">
+            <div class="listing-name">Mieszkanie #3</div>
+            <div class="listing-location">📍 ul. Żeromskiego 18</div>
+            <p class="listing-desc">Przytulny apartament z nowoczesnym wykończeniem i pełnym wyposażeniem.</p>
+            <a href="tel:600259675" class="listing-cta">📞 Zadzwoń</a>
+          </div>
+        </article>
+
+        <!-- Card 4 -->
+        <article class="listing-card fade-up delay-1">
+          <div class="listing-header grad-4">
+            🛏️
+            <span class="status-badge badge-orange">Zarezerwowane</span>
+          </div>
+          <div class="listing-body">
+            <div class="listing-name">Mieszkanie #4</div>
+            <div class="listing-location">📍 ul. Żeromskiego 18</div>
+            <p class="listing-desc">Zarezerwowane. Zapytaj o kolejny wolny termin.</p>
+            <a href="tel:600259675" class="listing-cta">📞 Zapytaj o termin</a>
+          </div>
+        </article>
+
+        <!-- Card 5 -->
+        <article class="listing-card fade-up delay-2">
+          <div class="listing-header grad-5">
+            🛏️
+            <span class="status-badge badge-grey">Wynajęte</span>
+          </div>
+          <div class="listing-body">
+            <div class="listing-name">Mieszkanie #5</div>
+            <div class="listing-location">📍 ul. Żeromskiego 18</div>
+            <p class="listing-desc">Aktualnie zajęte. Dołącz do listy oczekujących.</p>
+            <a href="tel:600259675" class="listing-cta">📞 Lista oczekujących</a>
+          </div>
+        </article>
+
+        <!-- Card 6 -->
+        <article class="listing-card fade-up delay-3">
+          <div class="listing-header grad-6">
+            🏠
+            <span class="status-badge badge-green">Dostępne</span>
+          </div>
+          <div class="listing-body">
+            <div class="listing-name">Apartament 1-pokojowy</div>
+            <div class="listing-location">📍 ul. Żeromskiego 27</div>
+            <p class="listing-desc">Kameralny apartament blisko uczelni. Idealne dla studenta lub pracującego.</p>
+            <a href="tel:600259675" class="listing-cta">📞 Zadzwoń</a>
+          </div>
+        </article>
+
+        <!-- Card 7 -->
+        <article class="listing-card fade-up delay-1">
+          <div class="listing-header grad-7">
+            🏠
+            <span class="status-badge badge-green">Dostępne</span>
+          </div>
+          <div class="listing-body">
+            <div class="listing-name">Mieszkanie 5-pokojowe</div>
+            <div class="listing-location">📍 ul. Żeromskiego 27</div>
+            <p class="listing-desc">Przestronne mieszkanie dla grupy. 5 osobnych pokojów, wspólna kuchnia i łazienka.</p>
+            <a href="tel:600259675" class="listing-cta">📞 Zadzwoń</a>
+          </div>
+        </article>
+
+        <!-- Card 8 -->
+        <article class="listing-card fade-up delay-2">
+          <div class="listing-header grad-8">
+            🏠
+            <span class="status-badge badge-green">Dostępne</span>
+          </div>
+          <div class="listing-body">
+            <div class="listing-name">Mieszkanie 5-pokojowe</div>
+            <div class="listing-location">📍 ul. Żeromskiego 29</div>
+            <p class="listing-desc">Duże mieszkanie z pokojami do wynajęcia osobno. Blisko centrum.</p>
+            <a href="tel:600259675" class="listing-cta">📞 Zadzwoń</a>
+          </div>
+        </article>
+
+        <!-- Card 9 -->
+        <article class="listing-card fade-up delay-3">
+          <div class="listing-header grad-9">
+            🏠
+            <span class="status-badge badge-blue">W Realizacji</span>
+          </div>
+          <div class="listing-body">
+            <div class="listing-name">Mieszkanie 3-pokojowe #1</div>
+            <div class="listing-location">📍 ul. Gdańska 98</div>
+            <p class="listing-desc">Nowy projekt w trakcie realizacji. Zapytaj o dostępność wkrótce.</p>
+            <a href="tel:600259675" class="listing-cta">📞 Zapytaj o dostępność</a>
+          </div>
+        </article>
+
+        <!-- Card 10 -->
+        <article class="listing-card fade-up delay-1" style="grid-column: 2;">
+          <div class="listing-header grad-10">
+            🏠
+            <span class="status-badge badge-blue">W Realizacji</span>
+          </div>
+          <div class="listing-body">
+            <div class="listing-name">Mieszkanie 3-pokojowe #2</div>
+            <div class="listing-location">📍 ul. Gdańska 98</div>
+            <p class="listing-desc">Kolejny lokal już wkrótce gotowy. Zapisz się na listę oczekujących.</p>
+            <a href="tel:600259675" class="listing-cta">📞 Zapisz się</a>
+          </div>
+        </article>
+
+      </div>
+
+      <div class="listings-cta-wrap fade-up">
+        <a href="tel:600259675" class="btn btn-primary btn-lg">📞 Zadzwoń i zapytaj o dostępność: 600-259-675</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================
+       O NAS
+  ======================================================== -->
+  <section id="o-nas" class="section-pad">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-text fade-up">
+          <h2>Kim jesteśmy?</h2>
+          <p>Frada Enterprises to profesjonalna firma zajmująca się wynajmem pokojów i mieszkań w centrum Łodzi. Specjalizujemy się w ofercie dla studentów i młodych pracujących, którzy szukają nowoczesnego, spokojnego i przystępnego cenowo miejsca do życia.</p>
+          <p>Wszystkie nasze nieruchomości są starannie wyremontowane, w pełni wyposażone i regularnie serwisowane. Wybieramy tylko dobre, bezpieczne i atrakcyjne lokalizacje — zawsze blisko uczelni lub komunikacji miejskiej.</p>
+          <p>Zależy nam na Twoim komforcie: u nas masz pełną prywatność, własny klucz i spokój. Regulamin mieszkania nie pozwala na imprezy — dzięki temu panuje atmosfera sprzyjająca nauce i wypoczynkowi.</p>
+          <p><strong>Zapraszamy serdecznie!</strong></p>
+
+          <div class="about-stats">
+            <div class="stat-item">🏠 10+ lokali w portfolio</div>
+            <div class="stat-item">📍 Centrum Łodzi — ul. Żeromskiego i okolice</div>
+            <div class="stat-item">⭐ Zaufanie studentów od lat</div>
+            <div class="stat-item">🤝 Umowa i pełne bezpieczeństwo</div>
+          </div>
+        </div>
+
+        <!-- CSS City Art -->
+        <div class="city-art fade-up delay-2">
+          <div class="city-wrapper">
+            <div class="city-sun"></div>
+            <div class="city-cloud"><div class="cloud-body"></div></div>
+
+            <div class="city-skyline">
+              <!-- Building 1 - narrow tall -->
+              <div class="building" style="width:30px;height:180px;">
+                <div class="building-windows">
+                  <div class="window-row"><div class="w"></div><div class="w dark"></div></div>
+                  <div class="window-row"><div class="w dark"></div><div class="w"></div></div>
+                  <div class="window-row"><div class="w"></div><div class="w"></div></div>
+                  <div class="window-row"><div class="w dark"></div><div class="w dark"></div></div>
+                  <div class="window-row"><div class="w"></div><div class="w dark"></div></div>
+                  <div class="window-row"><div class="w dark"></div><div class="w"></div></div>
+                  <div class="window-row"><div class="w"></div><div class="w"></div></div>
+                  <div class="window-row"><div class="w"></div><div class="w dark"></div></div>
+                </div>
+              </div>
+              <!-- Building 2 - wide medium -->
+              <div class="building" style="width:50px;height:130px;background:#2d3a5e;">
+                <div class="building-windows">
+                  <div class="window-row"><div class="w"></div><div class="w dark"></div><div class="w"></div></div>
+                  <div class="window-row"><div class="w dark"></div><div class="w"></div><div class="w dark"></div></div>
+                  <div class="window-row"><div class="w"></div><div class="w"></div><div class="w"></div></div>
+                  <div class="window-row"><div class="w dark"></div><div class="w dark"></div><div class="w"></div></div>
+                </div>
+              </div>
+              <!-- Building 3 - tall central -->
+              <div class="building" style="width:40px;height:220px;background:#152038;">
+                <div class="building-windows">
+                  <div class="window-row"><div class="w dark"></div><div class="w"></div></div>
+                  <div class="window-row"><div class="w"></div><div class="w dark"></div></div>
+                  <div class="window-row"><div class="w dark"></div><div class="w"></div></div>
+                  <div class="window-row"><div class="w"></div><div class="w"></div></div>
+                  <div class="window-row"><div class="w dark"></div><div class="w dark"></div></div>
+                  <div class="window-row"><div class="w"></div><div class="w dark"></div></div>
+                  <div class="window-row"><div class="w dark"></div><div class="w"></div></div>
+                  <div class="window-row"><div class="w"></div><div class="w"></div></div>
+                  <div class="window-row"><div class="w dark"></div><div class="w"></div></div>
+                </div>
+              </div>
+              <!-- Building 4 - short wide -->
+              <div class="building" style="width:60px;height:100px;background:#2a3f6a;">
+                <div class="building-windows">
+                  <div class="window-row"><div class="w"></div><div class="w dark"></div><div class="w"></div><div class="w"></div></div>
+                  <div class="window-row"><div class="w dark"></div><div class="w"></div><div class="w dark"></div><div class="w dark"></div></div>
+                  <div class="window-row"><div class="w"></div><div class="w"></div><div class="w"></div><div class="w dark"></div></div>
+                </div>
+              </div>
+              <!-- Building 5 - medium -->
+              <div class="building" style="width:35px;height:160px;background:#1a3050;">
+                <div class="building-windows">
+                  <div class="window-row"><div class="w dark"></div><div class="w"></div></div>
+                  <div class="window-row"><div class="w"></div><div class="w dark"></div></div>
+                  <div class="window-row"><div class="w dark"></div><div class="w"></div></div>
+                  <div class="window-row"><div class="w"></div><div class="w"></div></div>
+                  <div class="window-row"><div class="w dark"></div><div class="w dark"></div></div>
+                  <div class="window-row"><div class="w"></div><div class="w dark"></div></div>
+                </div>
+              </div>
+              <!-- Building 6 - narrow short -->
+              <div class="building" style="width:28px;height:120px;">
+                <div class="building-windows">
+                  <div class="window-row"><div class="w"></div><div class="w dark"></div></div>
+                  <div class="window-row"><div class="w dark"></div><div class="w"></div></div>
+                  <div class="window-row"><div class="w"></div><div class="w"></div></div>
+                  <div class="window-row"><div class="w dark"></div><div class="w"></div></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="city-road"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================
+       KONTAKT
+  ======================================================== -->
+  <section id="kontakt" class="section-pad">
+    <div class="container">
+      <div class="contact-grid">
+
+        <div class="contact-info fade-up">
+          <h2>Skontaktuj się z nami</h2>
+          <p class="contact-sub">Chcesz zamieszkać? Masz pytania? Zadzwoń lub napisz — odpowiadamy szybko.</p>
+
+          <div class="contact-items">
+            <div class="contact-item">
+              <span class="contact-item-icon">📍</span>
+              <div class="contact-item-text">ul. Żeromskiego 29<br>90-737 Łódź</div>
+            </div>
+            <div class="contact-item">
+              <span class="contact-item-icon">✉️</span>
+              <div class="contact-item-text">
+                <a href="mailto:Frada.Enterprises@gmail.com">Frada.Enterprises@gmail.com</a>
+              </div>
+            </div>
+            <div class="contact-item">
+              <span class="contact-item-icon">⏰</span>
+              <div class="contact-item-text">Dostępni 7 dni w tygodniu</div>
+            </div>
+          </div>
+
+          <a href="tel:600259675" class="contact-call-btn">
+            📞 600-259-675
+          </a>
+        </div>
+
+        <div class="contact-form-card fade-up delay-2">
+          <h3>Napisz do nas</h3>
+          <form id="contactForm" novalidate>
+            <div class="form-group">
+              <label for="name">Imię i nazwisko *</label>
+              <input type="text" id="name" name="name" placeholder="Jan Kowalski" required>
+            </div>
+            <div class="form-group">
+              <label for="phone">Numer telefonu *</label>
+              <input type="tel" id="phone" name="phone" placeholder="600 000 000" required>
+            </div>
+            <div class="form-group">
+              <label for="email">Adres e-mail</label>
+              <input type="email" id="email" name="email" placeholder="jan@email.com">
+            </div>
+            <div class="form-group">
+              <label for="room">Który pokój Cię interesuje?</label>
+              <select id="room" name="room">
+                <option value="">-- Wybierz --</option>
+                <option>Mieszkanie #1 — ul. Żeromskiego 18</option>
+                <option>Mieszkanie #2 — ul. Żeromskiego 18</option>
+                <option>Mieszkanie #3 — ul. Żeromskiego 18</option>
+                <option>Mieszkanie #4 — ul. Żeromskiego 18 (zarezerwowane)</option>
+                <option>Mieszkanie #5 — ul. Żeromskiego 18 (wynajęte)</option>
+                <option>Apartament 1-pokojowy — ul. Żeromskiego 27</option>
+                <option>Mieszkanie 5-pokojowe — ul. Żeromskiego 27</option>
+                <option>Mieszkanie 5-pokojowe — ul. Żeromskiego 29</option>
+                <option>Mieszkanie 3-pokojowe #1 — ul. Gdańska 98 (w realizacji)</option>
+                <option>Mieszkanie 3-pokojowe #2 — ul. Gdańska 98 (w realizacji)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="message">Wiadomość</label>
+              <textarea id="message" name="message" rows="4" placeholder="Napisz nam, co Cię interesuje..."></textarea>
+            </div>
+            <button type="submit" class="form-submit">Wyślij wiadomość</button>
+            <div class="form-success" id="formSuccess">
+              ✅ Dziękujemy! Skontaktujemy się z Tobą wkrótce.
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================
+       FOOTER
+  ======================================================== -->
+  <footer id="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div>
+          <div class="footer-brand-name">Szlakiem Żeromskiego</div>
+          <div class="footer-tagline">Nowoczesne pokoje dla studentów i młodych pracujących w centrum Łodzi</div>
+          <div class="footer-copy">© 2025 Frada Enterprises. Wszelkie prawa zastrzeżone.</div>
+        </div>
+        <div class="footer-col">
+          <h4>Nawigacja</h4>
+          <ul class="footer-links">
+            <li><a href="#oferta">Nasza Oferta</a></li>
+            <li><a href="#pokoje">Pokoje i Mieszkania</a></li>
+            <li><a href="#o-nas">O Nas</a></li>
+            <li><a href="#kontakt">Kontakt</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Kontakt</h4>
+          <div class="footer-contact-item">📍 ul. Żeromskiego 29, 90-737 Łódź</div>
+          <div class="footer-contact-item">📞 <a href="tel:600259675">600-259-675</a></div>
+          <div class="footer-contact-item">✉️ <a href="mailto:Frada.Enterprises@gmail.com">Frada.Enterprises@gmail.com</a></div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        Wszelkie prawa zastrzeżone. | ul. Żeromskiego 29, 90-737 Łódź | Frada Enterprises
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========================================================
+       FLOATING PHONE BUTTON
+  ======================================================== -->
+  <a href="tel:600259675" class="float-phone" aria-label="Zadzwoń do nas">
+    <span class="float-icon">📞</span>
+    <span class="float-text">600-259-675</span>
+  </a>
+
+  <!-- ========================================================
+       JAVASCRIPT
+  ======================================================== -->
+  <script>
+    /* --------------------------------------------------------
+       1. NAVBAR — scroll behavior
+    -------------------------------------------------------- */
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    }, { passive: true });
+
+    /* --------------------------------------------------------
+       2. HAMBURGER MENU
+    -------------------------------------------------------- */
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileClose = document.getElementById('mobileClose');
+    const mobileLinks = document.querySelectorAll('.mobile-link');
+
+    function openMenu() {
+      hamburger.classList.add('open');
+      mobileMenu.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMenu() {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    hamburger.addEventListener('click', openMenu);
+    mobileClose.addEventListener('click', closeMenu);
+    mobileLinks.forEach(link => link.addEventListener('click', closeMenu));
+
+    /* --------------------------------------------------------
+       3. INTERSECTION OBSERVER — fade-up animations
+    -------------------------------------------------------- */
+    const fadeElements = document.querySelectorAll('.fade-up');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: '0px 0px -40px 0px'
+    });
+
+    fadeElements.forEach(el => observer.observe(el));
+
+    /* --------------------------------------------------------
+       4. CONTACT FORM — validation & success
+    -------------------------------------------------------- */
+    const form = document.getElementById('contactForm');
+    const formSuccess = document.getElementById('formSuccess');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const name = document.getElementById('name').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+
+      if (!name) {
+        document.getElementById('name').focus();
+        document.getElementById('name').style.borderColor = '#dc3545';
+        setTimeout(() => { document.getElementById('name').style.borderColor = ''; }, 2000);
+        return;
+      }
+
+      if (!phone) {
+        document.getElementById('phone').focus();
+        document.getElementById('phone').style.borderColor = '#dc3545';
+        setTimeout(() => { document.getElementById('phone').style.borderColor = ''; }, 2000);
+        return;
+      }
+
+      // Success
+      form.style.opacity = '0.4';
+      form.style.pointerEvents = 'none';
+      formSuccess.style.display = 'block';
+
+      // Reset after 5 seconds
+      setTimeout(() => {
+        form.reset();
+        form.style.opacity = '1';
+        form.style.pointerEvents = 'auto';
+        formSuccess.style.display = 'none';
+      }, 5000);
+    });
+
+    /* --------------------------------------------------------
+       5. SMOOTH SCROLL — for all anchor links
+    -------------------------------------------------------- */
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        if (href === '#') return;
+        const target = document.querySelector(href);
+        if (target) {
+          e.preventDefault();
+          const offset = 70;
+          const top = target.getBoundingClientRect().top + window.scrollY - offset;
+          window.scrollTo({ top, behavior: 'smooth' });
+        }
+      });
+    });
+
+    /* --------------------------------------------------------
+       6. LAST CARD CENTER FIX — for 3-col grid last item
+    -------------------------------------------------------- */
+    // Handled via inline style in HTML (grid-column: 2) 
+    // but let's make it responsive:
+    function fixLastCard() {
+      const lastCard = document.querySelector('.listing-card[style*="grid-column: 2"]') ||
+                       document.querySelector('.listing-card:last-child');
+      if (lastCard) {
+        if (window.innerWidth <= 768) {
+          lastCard.style.gridColumn = '';
+        } else {
+          lastCard.style.gridColumn = '2';
+        }
+      }
+    }
+    fixLastCard();
+    window.addEventListener('resize', fixLastCard);
+  </script>
+
+</body>
+</html>
