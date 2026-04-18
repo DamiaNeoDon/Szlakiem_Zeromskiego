@@ -1,25 +1,211 @@
-<!--
-DEPLOYMENT INSTRUCTIONS FOR GITHUB PAGES:
-1. Create a new repository on GitHub (e.g., 'szlakiem-zeromskiego').
-2. Upload this file and name it exactly 'index.html'.
-3. Go to Settings > Pages in your GitHub repository.
-4. Under 'Build and deployment', set 'Source' to 'Deploy from a branch'.
-5. Select the 'main' branch and '/' (root) folder, then click 'Save'.
-6. Your website will be live at: https://<your-username>.github.io/szlakiem-zeromskiego/
--->
-<!doctype html>
-<html lang="pl">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Szlakiem Żeromskiego - Nowoczesne Pokoje Łódź</title>
-    <meta name="description" content="Nowoczesne pokoje dla studentów i młodych pracujących w centrum Łodzi. Wynajem pokoi ul. Żeromskiego, Gdańska - Frada Enterprises." />
-    <meta property="og:title" content="Szlakiem Żeromskiego - Nowoczesne Pokoje Łódź" />
-    <meta property="og:description" content="Wynajem nowoczesnych pokoi w centrum Łodzi. Bez kaucji warunkowej, świetna lokalizacja." />
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
-</html>
+You are an expert full-stack web developer. Build a complete, production-ready, high-converting single-page website for a room rental business in Łódź, Poland.
 
+OUTPUT: One single self-contained `index.html` file with ALL CSS inside a `<style>` tag in `<head>` and ALL JavaScript inside a `<script>` tag before `</body>`. Zero external dependencies. Zero CDN links. Zero npm. Must work by simply opening the file in a browser or uploading to GitHub Pages.
+
+---
+
+## BUSINESS CONTENT
+
+Brand: "Szlakiem Żeromskiego"
+Tagline: NOWOCZESNE POKOJE DLA STUDENTÓW I MŁODYCH PRACUJĄCYCH W CENTRUM ŁODZI
+Company: Frada Enterprises
+Address: ul. Żeromskiego 29, 90-737 Łódź
+Phone: 600-259-675
+Email: Frada.Enterprises@gmail.com
+
+---
+
+## DESIGN DIRECTION
+
+Mirror the layout and UX feel of wolnepokojelodz.pl:
+- Clean, modern Polish real-estate rental aesthetic
+- Sticky top navbar: brand name left, anchor links right, phone number visible, CTA button
+- Full-width hero with dark overlay gradient and strong headline + two CTA buttons
+- Alternating white and light grey (#F8F9FA) sections
+- Card grid for room listings
+- Icon + text benefit blocks
+- Floating phone button fixed bottom-right corner
+- Smooth scroll, fade-in-on-scroll animations via Intersection Observer
+- Navbar background changes on scroll (transparent → white with shadow after 50px)
+
+Color palette:
+- Primary navy: #1a2744
+- Accent orange: #E8782A
+- Light background: #F8F9FA
+- White: #FFFFFF
+- Body text: #212529
+
+Font: system font stack only: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif
+
+---
+
+## FULL PAGE STRUCTURE
+
+### SECTION 1 — STICKY NAVIGATION
+- Left: brand name "Szlakiem Żeromskiego" in bold navy
+- Right: anchor links → Oferta | Pokoje | O Nas | Kontakt
+- Far right: phone "📞 600-259-675" + orange CTA button "Zadzwoń teraz" (tel: link)
+- Mobile: hamburger menu toggle (JS-powered, no libraries)
+- Becomes white with box-shadow after scrolling 50px
+
+### SECTION 2 — HERO
+- Full viewport height
+- Background: CSS gradient from #1a2744 to #2d3a5e, plus a subtle repeating geometric CSS pattern overlay (use background-image with CSS to create a city-grid texture — no external images)
+- H1: "Nowoczesne Pokoje w Sercu Łodzi"
+- H2 subheadline: "Dla studentów i młodych pracujących — w pełni wyposażone, bez zbędnych formalności"
+- Two buttons: "Zobacz Ofertę" (scrolls to #pokoje) + "Zadzwoń: 600-259-675" (tel: link, outlined style)
+- Trust row below buttons (small text with checkmarks): ✓ Umowa na piśmie  ✓ Własny klucz  ✓ Cisza i komfort  ✓ Centrum Łodzi
+
+### SECTION 3 — DLACZEGO MY (id="oferta", white background)
+Headline: "Dlaczego warto wybrać właśnie nas?"
+Three large feature cards in a row (stack on mobile):
+
+Card 1:
+Icon: large 🔐 emoji in a circle
+Title: BEZPIECZEŃSTWO
+Text: Jesteśmy profesjonalną firmą. Zawsze masz swój własny, jedyny klucz do pokoju. Właściciel nie mieszka w lokalu — masz pełną prywatność i swobodę.
+
+Card 2:
+Icon: 📍
+Title: DOSKONAŁE LOKALIZACJE
+Text: Wszystkie nasze nieruchomości leżą w centrum Łodzi — tuż przy uczelniach wyższych lub w odległości maksymalnie 3 minut spacerem od przystanku tramwajowego lub autobusowego.
+
+Card 3:
+Icon: 💰
+Title: OKAZYJNA CENA
+Text: Nowoczesny, w pełni wyposażony pokój za cenę zwykłej stancji? Sprawdź nas — naprawdę jesteśmy tańsi niż porównywalne oferty na rynku łódzkim.
+
+### SECTION 4 — CO WCHODZI W CENĘ (light grey background)
+Headline: "Co otrzymujesz w cenie najmu?"
+2-column icon grid (4 columns on desktop):
+📶 Darmowe Wi-Fi
+🛋️ Nowoczesne meble
+🧺 Pralka
+❄️ Lodówka
+📦 Kuchenka mikrofalowa
+🍳 W pełni wyposażona kuchnia
+🔑 Własny klucz do pokoju
+🤫 Regulamin gwarantujący ciszę
+🧹 Zadbane przestrzenie wspólne
+🏙️ Lokalizacja w centrum Łodzi
+🧲 Żelazko
+📋 Umowa najmu na piśmie
+
+Centered tagline below the grid: "Potrzebujesz tylko szczoteczki do zębów i ręcznika 😊"
+
+### SECTION 5 — NASZE POKOJE I MIESZKANIA (id="pokoje", white background)
+Headline: "Nasze Pokoje i Mieszkania"
+Subheadline: "Przykładowe realizacje — ulica Żeromskiego i okolice, centrum Łodzi"
+
+Responsive card grid — 3 columns desktop, 2 tablet, 1 mobile.
+Each card structure:
+- Header block with CSS gradient background (vary the gradient per card using shades of navy/teal/slate), centered large room emoji (🛏️ or 🏠), and a status badge top-right corner
+- Card body: room name, short description, location
+- Footer: orange "Zadzwoń" button (tel:600-259-675)
+
+Status badge styles:
+- DOSTĘPNE → green (#28a745)
+- ZAREZERWOWANE → orange (#E8782A)
+- WYNAJĘTE → grey (#6c757d)
+- W REALIZACJI → blue (#007bff)
+
+Cards to generate:
+1. Mikro-apartament #1 | ul. Żeromskiego 18 | DOSTĘPNE | Nowoczesne studio w pełni wyposażone. Idealne dla jednej osoby. Centrum Łodzi.
+2. Mikro-apartament #2 | ul. Żeromskiego 18 | DOSTĘPNE | Funkcjonalne studio z własną przestrzenią do pracy i wypoczynku.
+3. Mikro-apartament #3 | ul. Żeromskiego 18 | DOSTĘPNE | Przytulny apartament z nowoczesnym wykończeniem i pełnym wyposażeniem.
+4. Mikro-apartament #4 | ul. Żeromskiego 18 | ZAREZERWOWANE | Zarezerwowane. Zapytaj o kolejny wolny termin.
+5. Mikro-apartament #5 | ul. Żeromskiego 18 | WYNAJĘTE | Aktualnie zajęte. Dołącz do listy oczekujących.
+6. Apartament 1-pokojowy | ul. Żeromskiego 27 | DOSTĘPNE | Kameralny apartament blisko uczelni. Idealne dla studenta lub pracującego.
+7. Mieszkanie 5-pokojowe | ul. Żeromskiego 27 | DOSTĘPNE | Przestronne mieszkanie dla grupy. 5 osobnych pokojów, wspólna kuchnia i łazienka.
+8. Mieszkanie 5-pokojowe | ul. Żeromskiego 29 | DOSTĘPNE | Duże mieszkanie z pokojami do wynajęcia osobno. Blisko centrum.
+9. Mieszkanie 3-pokojowe | ul. Gdańska 98 | W REALIZACJI | Nowy projekt w trakcie realizacji. Zapytaj o dostępność wkrótce.
+10. Mieszkanie 3-pokojowe | ul. Gdańska 98 | W REALIZACJI | Kolejny lokal już wkrótce gotowy. Zapisz się na listę oczekujących.
+
+Below the grid, centered: large orange button "Zadzwoń i zapytaj o dostępność: 600-259-675"
+
+### SECTION 6 — O NAS (id="o-nas", light grey background)
+Two-column layout (text left, decorative CSS art right — draw a simple abstract building/city shape using pure CSS divs and borders, no images):
+
+Headline: "Kim jesteśmy?"
+Body text:
+"Frada Enterprises to profesjonalna firma zajmująca się wynajmem pokojów i mieszkań w centrum Łodzi. Specjalizujemy się w ofercie dla studentów i młodych pracujących, którzy szukają nowoczesnego, spokojnego i przystępnego cenowo miejsca do życia.
+
+Wszystkie nasze nieruchomości są starannie wyremontowane, w pełni wyposażone i regularnie serwisowane. Wybieramy tylko dobre, bezpieczne i atrakcyjne lokalizacje — zawsze blisko uczelni lub komunikacji miejskiej.
+
+Zależy nam na Twoim komforcie: u nas masz pełną prywatność, własny klucz i spokój. Regulamin mieszkania nie pozwala na imprezy — dzięki temu panuje atmosfera sprzyjająca nauce i wypoczynkowi.
+
+Zapraszamy serdecznie!"
+
+Below text: two smaller stat blocks in a row:
+- 🏠 10+ lokali w portfolio
+- 📍 Centrum Łodzi — ul. Żeromskiego i okolice
+- ⭐ Zaufanie studentów od lat
+- 🤝 Umowa i pełne bezpieczeństwo
+
+### SECTION 7 — KONTAKT (id="kontakt", dark navy background #1a2744, white text)
+Two-column layout:
+
+Left column — contact details:
+Large headline: "Skontaktuj się z nami"
+Subtext: "Chcesz zamieszkać? Masz pytania? Zadzwoń lub napisz — odpowiadamy szybko."
+
+📍 ul. Żeromskiego 29, 90-737 Łódź
+📞 600-259-675 — large, clickable, styled as a big orange button
+✉️ Frada.Enterprises@gmail.com — clickable mailto link
+⏰ Dostępni 7 dni w tygodniu
+
+Right column — contact form (white card on dark background):
+Fields:
+- Imię i nazwisko (required, text input)
+- Numer telefonu (required, tel input)
+- Adres e-mail (email input)
+- Który pokój Cię interesuje? (select dropdown with all 10 listing names)
+- Wiadomość (textarea, 4 rows)
+- Submit button: "Wyślij wiadomość" (full-width orange)
+On submit: preventDefault, validate required fields, show a success message div: "✅ Dziękujemy! Skontaktujemy się z Tobą wkrótce." — no page reload, no backend needed.
+
+### SECTION 8 — FOOTER (dark #212529 background, white text)
+Three columns:
+Col 1: Brand name + tagline + copyright © 2025 Frada Enterprises
+Col 2: Quick links (same nav anchors)
+Col 3: Contact summary (address, phone, email)
+Bottom bar: "Wszelkie prawa zastrzeżone. | ul. Żeromskiego 29, 90-737 Łódź"
+
+### FLOATING ELEMENT — PHONE BUTTON
+Fixed bottom-right, always visible:
+Orange circle button with 📞 icon
+On hover: expands to show "600-259-675" text
+Links to tel:600-259-675
+Add a subtle pulse animation (CSS keyframes) to draw attention
+
+---
+
+## JAVASCRIPT REQUIREMENTS (all vanilla, no libraries)
+
+1. Sticky navbar: add class `.scrolled` when window.scrollY > 50 → changes background to white + adds box-shadow
+2. Mobile hamburger menu: toggle nav links visibility on click, close on link click
+3. Smooth scroll: all anchor `<a href="#...">` links scroll smoothly (also set CSS scroll-behavior: smooth on html)
+4. Intersection Observer: all sections and cards fade-in + slide-up when entering viewport (add `.visible` class, CSS handles the transition)
+5. Contact form: validation + success message (no page reload)
+6. Floating button hover expand: CSS transition, optionally JS for touch devices
+
+---
+
+## SEO META TAGS (in `<head>`)
+
+```html
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Szlakiem Żeromskiego – Nowoczesne Pokoje do Wynajęcia w Centrum Łodzi</title>
+<meta name="description" content="Wynajmij nowoczesny pokój lub mikro-apartament w centrum Łodzi. Oferta dla studentów i młodych pracujących. Pełne wyposażenie, własny klucz, cisza. Zadzwoń: 600-259-675">
+<meta name="keywords" content="pokoje do wynajęcia Łódź, wynajmij pokój Łódź centrum, stancja Łódź student, mieszkanie Łódź Żeromskiego, pokój dla studenta Łódź">
+<meta property="og:title" content="Szlakiem Żeromskiego – Pokoje w Centrum Łodzi">
+<meta property="og:description" content="Nowoczesne, w pełni wyposażone pokoje dla studentów i pracujących. Centrum Łodzi. Tel: 600-259-675">
+<meta property="og:type" content="website">
+```
+
+---
+
+## GITHUB PAGES DEPLOYMENT INSTRUCTIONS
+
+Place this comment block at the very top of index.html (line 1):
